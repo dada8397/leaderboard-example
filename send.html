@@ -10,76 +10,123 @@
     <link href="https://fonts.googleapis.com/css?family=Galada|Ubuntu:400,500,700" rel="stylesheet">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/send.css" rel="stylesheet">
-
+    
     <script src="https://code.jquery.com/jquery-2.2.2.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/iota.min.js"></script>
 
-    <script type="text/javascript" src="js/helpers/updateBalanceHTML.js"></script>
+    <script type="text/javascript" src="js/helpers/updateLeaderboardHTML.js"></script>
     <script type="text/javascript" src="js/helpers/updateAddressHTML.js"></script>
     <script type="text/javascript" src="js/send.js"></script>
 </head>
 <body>
-    <main>
-        <header class="header">
-            <p class="header__title">My <span><img class="header__logo" src="images/logo.png" /></span> Leaderboard</p>
-            <nav>
-                <div class="nav-right hidden-xs">
-                    <div class="button" id="btn">
-                        <div class="bar top"></div>
-                        <div class="bar middle"></div>
-                        <div class="bar bottom"></div>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><span><img class="logo" src="./images/logo.png" /></span> IOTA</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Setting <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            My Seed
+                            <div class="well" id="enterSeed">
+                                <div class="form-group">
+                                    <input type="password" id="userSeed" class="form-control" placeholder="Your Seed">
+                                </div>
+                                <button type="button" id="seedSubmit" class="btn btn-default">Submit</button>
+                            </div>
+                        </li>
+                        <li>
+                            My Address
+                            <div id="getAddresses">
+                                <div class="genAddress__div">
+                                    <div id="overlay">
+                                        <div class="panel panel-danger">
+                                            <div class="panel-heading">Generating Address</div>
+                                            <div class="panel-body">
+                                                <p>Currently generating your address. This can take anywhere between 1 - 20minutes so be patient. Once your address was generated this note will disappear.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="genAddress" class="btn btn-success">Generate Address</button>
+                                    <div id="allAddresses">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="index.html"><i class="fa fa-fw fa-table"></i> Leaderboard</a>
+                    </li>
+                    <li class="active">
+                        <a href="send.html"><i class="fa fa-fw fa-edit"></i> Send</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h1 class="page-header">
+                            Send message
+                        </h1>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3 class="send__body-balance"><img class="send__logo" src="images/logo-black.png" /> Balance: <span class="label label-primary" id="iota__balance">0</span></h3>
                     </div>
                 </div>
-            </nav>
-        </header>
+                <!-- /.row -->
 
-        <section class="send__section">
-            <div class="send">
-                <div class="send__header">
-                    <p class="send__header-title">Send Message</p>
-                </div>
-                <div class="send__body">
-                    <div class="row">
-
-                        <div class="col-xs-12 send__body-title">
-                            <p class="send__body-balance"><img class="send__logo" src="images/logo-black.png" /> Balance: <span class="label label-primary" id="iota__balance">0</span></p>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" maxlength="16" class="form-control" id="name" placeholder="Enter Name">
                         </div>
 
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input type="text" maxlength="16" class="form-control" id="name" placeholder="Enter Name">
-                            </div>
+                        <div class="form-group">
+                            <label for="value">Value</label>
+                            <input type="number" class="form-control" id="value" placeholder="Value to Send">
                         </div>
 
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label for="value">Value</label>
-                                <input type="number" class="form-control" id="value" placeholder="Value to Send">
-                            </div>
+                        <div class = "form-group">
+                            <label for="address">Recipient Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="IOTA address of recipient">
                         </div>
 
-                        <div class="col-xs-12">
-                            <div class = "form-group">
-                                <label for="address">Recipient Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="IOTA address of recipient">
-                            </div>
+                        <div class = "form-group">
+                            <label for="message">Text Area</label>
+                            <textarea id="message" class="form-control" rows="3" placeholder="Message to send"></textarea>
                         </div>
-
-                        <div class="col-xs-12">
-                            <div class = "form-group">
-                                <label for="message">Text Area</label>
-                                <textarea id="message" class="form-control" rows="3" placeholder="Message to send"></textarea>
-                            </div>
-                        </div>
-
+                        
                         <div class="send__button">
                             <button class="btn btn-success btn-lg" id="submit">Submit</button>
                         </div>
-
                     </div>
 
                     <!-- Message to be displayed once successfully sent -->
@@ -105,34 +152,14 @@
                     </div>
                     <!-- -->
                 </div>
-            </div>
-        </section>
-    </main>
+                <!-- /.row -->
 
-        <div class="sidebar donotdisplay">
-            <ul class="sidebar-list">
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-anchor" data-toggle="collapse" data-target="#setSeed" aria-expanded="false" aria-controls="setSeed">My Seed</a>
-                    <div class="collapse" id="setSeed">
-                        <div class="well" id="enterSeed">
-                            <div class="form-group">
-                                <input type="password" id="userSeed" class="form-control" placeholder="Your Seed">
-                            </div>
-                            <button type="button" id="seedSubmit" class="btn btn-default">Submit</button>
-                        </div>
-                    </div>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-anchor" data-toggle="collapse" data-target="#getAddresses" aria-expanded="false" aria-controls="getAddresses">My Addresses</a>
-                    <div class="collapse" id="getAddresses">
-                        <div class="genAddress__div">
-                            <button type="button" id="genAddress" class="btn btn-success">Generate Address</button>
-                            <div id="allAddresses">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            </div>
+            <!-- /.container-fluid -->
+
         </div>
+        <!-- /#page-wrapper -->
+
+    </div>
 </body>
 </html>
